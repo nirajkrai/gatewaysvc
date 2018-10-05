@@ -1,0 +1,42 @@
+server:
+  port: 8765
+  
+info:
+  component: Zuul Edge Server
+  
+endpoints:
+  restart:
+    enabled: true
+  shutdown:
+    enabled: true
+  health:
+    sensitive: false
+
+zuul:
+   ignoredServices: "*"
+   prefix: /api
+   routes:
+     account: 
+       path: /account/**
+       serviceId: accountsvc
+     customer: 
+       path: /customer/**
+       serviceId: customersvc   
+     product:
+       path: /product/**     
+       serviceId: productsvc  
+
+ribbon:
+  eureka:
+    enabled: true
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    registerWithEureka: false
+      
+logging:
+  level:
+    ROOT: INFO
+    org.springframework.web: DEBUG
